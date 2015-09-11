@@ -1,0 +1,15 @@
+Pick a student? (y/n)
+>y
+Sam. 
+Did Sam get it right? (y/n)
+>y
+Great Job +1 point. Sam has 2 points.
+Pick a student? (y/n)
+>y
+Bill.
+Did Bill get it right? (y/n)
+>n
+Better luck next time! Bill has 3 points.
+Pick a student? (y/n)
+>n
+Exits
