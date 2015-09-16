@@ -13,7 +13,9 @@ public class Main {
 
 	private static final String STUDENTS_FILE = "students.csv";
 	private Random random = new Random();
-	private ArrayList<Student> students;
+	private ArrayList<Student> unpickedStudents;
+	private ArrayList<Student> allStudents;
+	private ArrayList<Student> pickedStudents = new ArrayList<>();
 	private Scanner keyboard = new Scanner(System.in);
 
 	public static void main(String[] args) throws IOException {
@@ -45,7 +47,14 @@ public class Main {
 	}
 
 	private Student pickRandomStudent() {
-		Student student = students.get(random.nextInt(students.size()));
+		if(unpickedStudents.isEmpty()){
+			ArrayList<Student> temp = unpickedStudents;
+			unpickedStudents = pickedStudents;
+			pickedStudents = temp;
+		}
+		
+		Student student = unpickedStudents.remove(random.nextInt(unpickedStudents.size()));
+		pickedStudents.add(student);
 		return student;
 	}
 
@@ -58,19 +67,22 @@ public class Main {
 	private void loadStudentsFromFile() throws FileNotFoundException {
 		File originalFile = new File(STUDENTS_FILE);
 		Scanner input = new Scanner(originalFile);
-		students = new ArrayList<>();
+		unpickedStudents = new ArrayList<>();
+		allStudents = new ArrayList<>();
 		
 		while(input.hasNextLine()){
 			StringTokenizer tokens = new StringTokenizer(input.nextLine(), ",");
-			students.add(new Student(tokens.nextToken(), Integer.parseInt(tokens.nextToken())));
+			Student student = new Student(tokens.nextToken(), Integer.parseInt(tokens.nextToken()));
+			unpickedStudents.add(student);
+			allStudents.add(student);
 		}
 		
 		input.close();
 	}
-	
+		
 	private void saveStudentsToFile() throws IOException{
 		PrintWriter output = new PrintWriter(STUDENTS_FILE);
-		for(Student s : students){
+		for(Student s : allStudents){
 			output.println(s.toCsvString());
 		}
 		output.close();
