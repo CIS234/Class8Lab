@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -22,7 +24,10 @@ public class Main {
 		Main main = new Main();
 		main.run();
 
+		System.out.println("LEADERBOARD");
+		main.printLeaderboard();
 		System.out.println("Hope everyone enjoys their bonus points!");
+		
 	}
 	
 	public Main() throws IOException{
@@ -88,4 +93,12 @@ public class Main {
 		output.close();
 	}
 
+	private void printLeaderboard(){
+		Collections.sort(allStudents);
+		
+		for(int i = 0; i < allStudents.size(); i++){
+			Student student = allStudents.get(i);
+			System.out.printf("%d. %s (%d points)%n", i+1, student, student.getPoints());
+		}
+	}
 }
