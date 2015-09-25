@@ -3,10 +3,19 @@ package cis232.lab;
 public class Student implements Comparable<Student>{
 	String name;
 	int points;
+	String present = null;
 	
 	public Student(String name, int points){
 		this.name = name;
 		this.points = points;
+	}
+	
+	public void setPresent(String present){
+		this.present = present;
+	}
+	
+	public boolean isPresent(){
+		return present == null || !present.equalsIgnoreCase("n");
 	}
 	
 	public void addPoint(){
@@ -18,7 +27,12 @@ public class Student implements Comparable<Student>{
 	}
 	
 	public String toCsvString(){
-		return String.format("%s,%d", name, points);
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.format("%s,%d", name, points));
+		if(present != null){
+			sb.append(String.format(",%s", present));
+		}
+		return sb.toString();
 	}
 	
 	public int getPoints(){

@@ -35,6 +35,11 @@ public class Main {
 	}
 	
 	public void run() throws IOException{
+		if(unpickedStudents.isEmpty()){
+			System.out.println("You are all alone. Go home.");
+			return;
+		}
+		
 		while(askToPickStudent()){
 			Student student = pickRandomStudent();
 			System.out.println(student);
@@ -78,7 +83,12 @@ public class Main {
 		while(input.hasNextLine()){
 			StringTokenizer tokens = new StringTokenizer(input.nextLine(), ",");
 			Student student = new Student(tokens.nextToken(), Integer.parseInt(tokens.nextToken()));
-			unpickedStudents.add(student);
+			if(tokens.hasMoreTokens()){
+				student.setPresent(tokens.nextToken());
+			}
+			if(student.isPresent()){
+				unpickedStudents.add(student);
+			}
 			allStudents.add(student);
 		}
 		
